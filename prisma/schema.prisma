@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../prisma/generated/type-graphql"
+}
+
+
+model ExpenditureRecord {
+  id String @id
+  date DateTime
+  name String
+  tags String[]  
+}
+
+model UploadRequest {
+  id String @id @default(cuid())
+  createdAt DateTime
+  key String @default("")
+}
