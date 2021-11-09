@@ -19,8 +19,10 @@ generator typegraphql {
 model ExpenditureRecord {
   id String @id
   date DateTime
-  name String
-  tags String[]  
+  recordedAt DateTime @default(now())
+  description String
+  labels String[]
+  amount Float
 }
 
 model UploadRequest {

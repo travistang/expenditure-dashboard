@@ -21,16 +21,8 @@ export default function NavigationPanel() {
           onClose={() => setUploadQRCodeOpen(false)}
         />
         <div className="vertical gap-2 flex-1 px-2 py-4">
-          <NavigationItem
-            onClick={console.log}
-            text="Dashboard"
-            icon={faTachometerAlt}
-          />
-          <NavigationItem
-            onClick={console.log}
-            text="All records"
-            icon={faList}
-          />
+          <NavigationItem link="/" text="Dashboard" icon={faTachometerAlt} />
+          <NavigationItem link="/lists" text="All records" icon={faList} />
         </div>
         <button
           onClick={() => setUploadQRCodeOpen(true)}

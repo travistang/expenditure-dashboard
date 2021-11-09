@@ -14,7 +14,6 @@ const handle = nextApp.getRequestHandler();
 
 nextApp
   .prepare()
-
   .then(async () => {
     const schema = await buildSchema({ resolvers, validate: false });
     return schema;
