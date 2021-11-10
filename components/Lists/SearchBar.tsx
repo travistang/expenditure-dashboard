@@ -1,11 +1,12 @@
 import {
   faCalendar,
   faEuroSign,
+  faFilter,
   faSearch,
+  faUndo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { format } from "date-fns";
 import { useFormik } from "formik";
 
 export type FilterValue = {
@@ -32,10 +33,18 @@ export default function SearchBar({ onChange }: Props) {
     onSubmit: onChange,
   });
 
+  const reset = () => {
+    formik.resetForm();
+    onChange(DEFAULT_FILTER_VALUE);
+  };
   return (
-    <div className="rounded-lg h-12 bg-base-100 p-4 flex items-center w-full">
-      <form onSubmit={formik.handleSubmit} className="flex gap-2">
-        <div className="flex flex-1">
+    <div className="rounded-lg bg-base-100 p-4 flex items-center w-full">
+      <form
+        onReset={reset}
+        onSubmit={formik.handleSubmit}
+        className="flex flex-wrap gap-2"
+      >
+        <div className="flex w-full">
           <span className="px-2 bg-primary rounded-l-lg flex items-center">
             <FontAwesomeIcon icon={faSearch} className="w-4 h-4" />
           </span>
@@ -77,7 +86,7 @@ export default function SearchBar({ onChange }: Props) {
             name="earliestDate"
             value={
               formik.values.earliestDate
-                ? format(formik.values.earliestDate, "dd/MM/yyyy")
+                ? formik.values.earliestDate.toString()
                 : ""
             }
             onChange={formik.handleChange}
@@ -88,8 +97,8 @@ export default function SearchBar({ onChange }: Props) {
           <input
             name="latestDate"
             value={
-              formik.values.earliestDate
-                ? format(formik.values.earliestDate, "dd/MM/yyyy")
+              formik.values.latestDate
+                ? formik.values.latestDate.toString()
                 : ""
             }
             onChange={formik.handleChange}
@@ -98,6 +107,18 @@ export default function SearchBar({ onChange }: Props) {
             className="input input-sm input-primary rounded-l-none border"
           />
         </div>
+        <button
+          type="reset"
+          className="btn btn-sm flex items-center gap-1 flex-1"
+        >
+          <FontAwesomeIcon icon={faUndo} className="w-4 h-4" />
+        </button>
+        <button
+          type="submit"
+          className="btn btn-primary btn-sm flex items-center gap-2 flex-1"
+        >
+          <FontAwesomeIcon icon={faFilter} className="w-4 h-4" />
+        </button>
       </form>
     </div>
   );

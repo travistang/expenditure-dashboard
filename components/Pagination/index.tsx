@@ -44,7 +44,6 @@ const computePagesDisplayed = (
   ];
 
   return requiredPages.reduce<PagesComputationResult[]>((allPages, page) => {
-    console.log({ allPages, page });
     if (!allPages.length) return [page];
     const lastPage = allPages[allPages.length - 1];
     if (
