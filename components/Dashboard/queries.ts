@@ -15,3 +15,30 @@ export const EXPENDITURE_OF_MONTH = gql`
     }
   }
 `;
+
+export const CREATE_EXPENDITURE_RECORD = gql`
+  mutation ($data: ExpenditureRecordCreateInput!) {
+    createExpenditureRecord(data: $data) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_EXPENDITURE_RECORD = gql`
+  mutation (
+    $data: ExpenditureRecordUpdateInput!
+    $where: ExpenditureRecordWhereUniqueInput!
+  ) {
+    updateExpenditureRecord(data: $data, where: $where) {
+      id
+    }
+  }
+`;
+
+export const DELETE_EXPENDITURE_RECORD = gql`
+  mutation ($where: ExpenditureRecordWhereUniqueInput!) {
+    deleteExpenditureRecord(where: $where) {
+      id
+    }
+  }
+`;

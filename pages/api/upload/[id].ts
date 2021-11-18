@@ -66,6 +66,7 @@ export default async function handler(
     }));
     const createResult = await prismaClient.expenditureRecord.createMany({
       data: transformedRecords,
+      skipDuplicates: true,
     });
     return res.status(200).json({ count: createResult.count });
   } catch (e) {

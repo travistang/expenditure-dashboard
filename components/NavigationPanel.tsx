@@ -13,23 +13,23 @@ export default function NavigationPanel() {
   const [uploadQRCodeOpen, setUploadQRCodeOpen] = React.useState(false);
 
   return (
-    <div className="vertical w-1/3 gap-2 md:w-1-1/4">
+    <div className="flex flex-col gap-2 md:w-1/5 lg:w-1/4">
       <Logo />
-      <nav className="flex-1 rounded-3xl bg-base-100 vertical gap-2">
+      <nav className="flex-1 rounded-3xl items-center sm:items-start bg-base-100 flex flex-row sm:flex-col gap-2">
         <UploadQRCodeModal
           opened={uploadQRCodeOpen}
           onClose={() => setUploadQRCodeOpen(false)}
         />
-        <div className="vertical gap-2 flex-1 px-2 py-4">
+        <div className="flex flex-row sm:flex-col gap-2 flex-1 px-2 py-4">
           <NavigationItem link="/" text="Dashboard" icon={faTachometerAlt} />
           <NavigationItem link="/lists" text="All records" icon={faList} />
         </div>
         <button
           onClick={() => setUploadQRCodeOpen(true)}
-          className="center px-4 gap-2 h-16 bg-accent rounded-b-3xl hover:bg-accent-focus"
+          className="center px-4 gap-2 h-full sm:h-16 sm:w-full bg-accent rounded-r-3xl sm:rounded-tr-none sm:rounded-b-3xl hover:bg-accent-focus"
         >
           <FontAwesomeIcon icon={faQrcode} className="w-4 flex-shrink-0" />
-          <span className="pl-2 uppercase">upload data</span>
+          <span className="pl-2 uppercase hidden md:block">upload data</span>
         </button>
       </nav>
     </div>

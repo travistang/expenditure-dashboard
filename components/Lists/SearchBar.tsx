@@ -38,13 +38,13 @@ export default function SearchBar({ onChange }: Props) {
     onChange(DEFAULT_FILTER_VALUE);
   };
   return (
-    <div className="rounded-lg bg-base-100 p-4 flex items-center w-full">
+    <div className="rounded-2xl bg-base-100 p-4 flex items-center w-full">
       <form
         onReset={reset}
         onSubmit={formik.handleSubmit}
-        className="flex flex-wrap gap-2"
+        className="flex w-full flex-wrap gap-2"
       >
-        <div className="flex w-full">
+        <div className="w-full flex">
           <span className="px-2 bg-primary rounded-l-lg flex items-center">
             <FontAwesomeIcon icon={faSearch} className="w-4 h-4" />
           </span>
@@ -57,7 +57,7 @@ export default function SearchBar({ onChange }: Props) {
             className="input input-sm flex-1 input-primary rounded-l-none border rounded-r-lg"
           />
         </div>
-        <div className="flex">
+        <div className="w-1/3 flex">
           <span className="px-2 bg-primary rounded-l-lg flex items-center">
             <FontAwesomeIcon icon={faEuroSign} className="w-4 h-4" />
           </span>
@@ -67,7 +67,10 @@ export default function SearchBar({ onChange }: Props) {
             onChange={formik.handleChange}
             type="number"
             placeholder="min"
-            className="input input-sm w-20 input-primary rounded-none border"
+            min={0}
+            max={formik.values.maxAmount}
+            step={0.01}
+            className="input input-sm w-full input-primary rounded-none border"
           />
           <input
             name="maxAmount"
@@ -75,10 +78,12 @@ export default function SearchBar({ onChange }: Props) {
             onChange={formik.handleChange}
             type="number"
             placeholder="max"
-            className="input input-sm w-20 input-primary rounded-l-none border"
+            min={formik.values.minAmount}
+            step={0.01}
+            className="input input-sm w-full input-primary rounded-l-none border"
           />
         </div>
-        <div className="flex">
+        <div className="w-1/2 md:w-auto md:flex-1 flex">
           <span className="px-2 bg-primary rounded-l-lg flex items-center">
             <FontAwesomeIcon icon={faCalendar} className="w-4 h-4" />
           </span>
@@ -92,7 +97,7 @@ export default function SearchBar({ onChange }: Props) {
             onChange={formik.handleChange}
             type="date"
             placeholder="from"
-            className="input input-sm input-primary rounded-none border"
+            className="input input-sm flex-1 input-primary rounded-none border"
           />
           <input
             name="latestDate"
@@ -104,18 +109,18 @@ export default function SearchBar({ onChange }: Props) {
             onChange={formik.handleChange}
             type="date"
             placeholder="to"
-            className="input input-sm input-primary rounded-l-none border"
+            className="input input-sm flex-1 input-primary rounded-l-none border"
           />
         </div>
         <button
           type="reset"
-          className="btn btn-sm flex items-center gap-1 flex-1"
+          className="btn btn-sm flex items-center gap-1 flex-1 w-1/2 sm:w-16"
         >
           <FontAwesomeIcon icon={faUndo} className="w-4 h-4" />
         </button>
         <button
           type="submit"
-          className="btn btn-primary btn-sm flex items-center gap-2 flex-1"
+          className="btn btn-primary btn-sm flex items-center gap-2 flex-1 w-1/2 sm:w-16"
         >
           <FontAwesomeIcon icon={faFilter} className="w-4 h-4" />
         </button>
