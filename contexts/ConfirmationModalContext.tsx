@@ -48,7 +48,6 @@ const ConfirmationModalContextProvider = ({
     requestConfirmation,
     onClose: () => setPayload(null),
   };
-  console.log({ contextValue });
   return (
     <ConfirmationModalContext.Provider value={contextValue}>
       {children}

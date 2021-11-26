@@ -12,7 +12,6 @@ export default function UploadQRCodeModal({ opened, onClose }: Props) {
     setCode(null);
     const response = await fetch("/api/generateUpload");
     const responseJson = await response.json();
-    console.log(responseJson);
     setCode(JSON.stringify(responseJson));
     return responseJson;
   };

@@ -1,13 +1,13 @@
 import React from "react";
 import classnames from "classnames";
-import { DocumentNode, gql, useQuery } from "@apollo/client";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-type Props = {
+export type Props = {
   title: string;
   subtitle?: string;
   className?: string;
+  centered?: boolean;
   unit?: string;
   value: number | string;
   additionalInfo?: {
@@ -19,6 +19,7 @@ export default function Stats({
   title,
   value,
   unit,
+  centered,
   additionalInfo,
   subtitle,
   className,
@@ -27,7 +28,13 @@ export default function Stats({
     !Number.isInteger(value) && typeof value === "number";
   const displayValue = shouldRoundValue ? (value as number).toFixed(2) : value;
   return (
-    <div className={classnames("stat", className)}>
+    <div
+      className={classnames(
+        "stat",
+        centered && "place-items-center place-content-center",
+        className
+      )}
+    >
       {additionalInfo && (
         <div
           className="stat-figure text-accent"
@@ -37,7 +44,7 @@ export default function Stats({
         </div>
       )}
       <div className="stat-title">{title}</div>
-      <div className="stat-value">
+      <div className="stat-value text-md">
         {displayValue}
         {unit}
       </div>
