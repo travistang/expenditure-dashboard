@@ -1,5 +1,6 @@
 import {
   faList,
+  faMoneyBill,
   faQrcode,
   faTachometerAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,9 +21,10 @@ export default function NavigationPanel() {
           opened={uploadQRCodeOpen}
           onClose={() => setUploadQRCodeOpen(false)}
         />
-        <div className="flex flex-row sm:flex-col gap-2 flex-1 px-2 py-4">
+        <div className="flex flex-row sm:flex-col gap-2 flex-1 w-full sm:py-4 pl-4 sm:pl-0">
           <NavigationItem link="/" text="Dashboard" icon={faTachometerAlt} />
           <NavigationItem link="/lists" text="All records" icon={faList} />
+          <NavigationItem link="/budgets" text="Budgets" icon={faMoneyBill} />
         </div>
         <button
           onClick={() => setUploadQRCodeOpen(true)}

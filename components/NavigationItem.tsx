@@ -1,5 +1,7 @@
+import classnames from "classnames";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 
 type Props = {
   link: string;
@@ -7,14 +9,23 @@ type Props = {
   icon: IconDefinition;
 };
 export default function NavigationItem({ link, text, icon }: Props) {
+  const router = useRouter();
+  const isInCurrentNavigation =
+    link === "/" ? router.pathname === link : router.pathname.startsWith(link);
   return (
     <a
       href={link}
-      className="gap-2 cursor-pointer px-4 hover:bg-base-100 horizontal-center w-12 sm:w-full h-4 sm:h-16 whitespace-nowrap uppercase rounded-3xl"
+      className={classnames(
+        "gap-2 rounded-full sm:rounded-none cursor-pointer sm:px-4 hover:bg-base-200 flex items-center justify-center sm:justify-start w-12 sm:w-full h-12 sm:h-16 whitespace-nowrap uppercase",
+        isInCurrentNavigation && "sm:bg-base-300 sm:bg-opacity-40"
+      )}
     >
       <FontAwesomeIcon
         icon={icon}
-        className="text-color-100 w-6 flex-shrink-0"
+        className={classnames(
+          "w-6 flex-shrink-0",
+          isInCurrentNavigation && "text-primary sm:text-base-content"
+        )}
       />
       <span className="pl-2 hidden md:block">{text}</span>
     </a>

@@ -15,18 +15,25 @@ generator typegraphql {
   output   = "../prisma/generated/type-graphql"
 }
 
-
 model ExpenditureRecord {
-  id String @id
-  date DateTime
-  recordedAt DateTime @default(now())
+  id          String   @id
+  date        DateTime
+  recordedAt  DateTime @default(now())
   description String
-  labels String[]
-  amount Float
+  labels      String[]
+  amount      Float
 }
 
 model UploadRequest {
-  id String @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime
-  key String @default("")
+  key       String   @default("")
+}
+
+model Budget {
+  id             String   @id @default(cuid())
+  name           String   @unique
+  includedLabels String[]
+  excludedLabels String[]
+  amount         Float
 }

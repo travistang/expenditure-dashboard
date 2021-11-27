@@ -9,7 +9,7 @@ import { faCheckCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { format, isValid } from "date-fns";
 import { DEFAULT_EXPENDITURE_RECORD } from "../../../constants/lists";
 import { ExpenditureRecordWithLabel } from "./types";
-import LabelsInput from "./LabelsInput";
+import LabelsInput from "../../Form/LabelsInput";
 import DatetimeInput from "./DatetimeInput";
 import {
   CREATE_EXPENDITURE_RECORD,
@@ -152,8 +152,10 @@ export default function RecordDetailModal({ record, refetch, onClose }: Props) {
             value={formik.values.date}
           />
           <LabelsInput
+            name="labels"
+            label="Labels"
+            errors={formik.errors}
             values={formik.values}
-            setFieldError={formik.setFieldError}
             handleChange={formik.handleChange}
             setFieldValue={formik.setFieldValue}
             setValues={formik.setValues}
