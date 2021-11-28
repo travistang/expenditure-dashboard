@@ -21,6 +21,8 @@ import AccumulatedChart from "../../components/Budgets/BudgetDetails/Accumulated
 import InputBase from "../../components/Form/Input";
 import { BudgetUsageColor, getBudgetUsageLevel } from "../../constants/budgets";
 import BudgetRecordsList from "../../components/Budgets/BudgetDetails/BudgetRecordsList";
+import LabelDistribution from "../../components/Budgets/BudgetDetails/LabelDistribution";
+import BudgetModal from "../../components/Budgets/BudgetModal";
 
 type BudgetResponse = {
   budget: Budget;
@@ -31,10 +33,18 @@ type RecordsResponse = {
 };
 export default function BudgetDetailPage() {
   const { query, push } = useRouter();
+
   const [searchDate, setSearchDate] = useState(new Date());
   const fromDate = startOfMonth(searchDate);
   const toDate = endOfMonth(searchDate);
-  const { data, loading } = useQuery<BudgetResponse>(GET_BUDGET_BY_ID, {
+
+  const [updatingBudget, setUpdatingBudget] = useState(false);
+
+  const {
+    data,
+    loading,
+    refetch: refetchBudget,
+  } = useQuery<BudgetResponse>(GET_BUDGET_BY_ID, {
     variables: { id: query.id },
   });
   const [
@@ -67,7 +77,14 @@ export default function BudgetDetailPage() {
   return (
     <div className="relative auto-rows-min grid grid-cols-12 h-full gap-4 w-full overflow-y-auto">
       {loading && <LoadingSpinnerCover />}
-      <div className="sticky top-0 col-span-full grid grid-cols-12 items-end pb-2 z-20 bg-base-200">
+      {updatingBudget && (
+        <BudgetModal
+          initialValue={data?.budget}
+          onClose={() => setUpdatingBudget(false)}
+          onCreate={refetchBudget}
+        />
+      )}
+      <div className="sticky top-0 col-span-full grid grid-cols-12 items-end pb-2 z-10 bg-base-200">
         <button
           type="button"
           onClick={() => push("/budgets")}
@@ -86,6 +103,7 @@ export default function BudgetDetailPage() {
         />
       </div>
       <BudgetSummary
+        onEdit={() => setUpdatingBudget(true)}
         className="col-start-1 col-span-full md:col-end-6 justify-between"
         loading={loading}
         budget={data?.budget}
@@ -114,6 +132,12 @@ export default function BudgetDetailPage() {
         loading={loading || loadingRecords}
         records={records}
         refetch={refetchRecords}
+      />
+      <LabelDistribution
+        className="col-span-full md:col-span-6 max-h-72"
+        loading={loading || loadingRecords}
+        records={records}
+        includedBudgetLabels={data?.budget.includedLabels ?? []}
       />
     </div>
   );

@@ -7,15 +7,20 @@ import withWidgetShell from "./WidgetShell";
 type Props = {
   budget?: Budget;
   records?: ExpenditureRecord[];
+  onEdit: () => void;
 };
-function BudgetSummary({ budget }: Props) {
+function BudgetSummary({ budget, onEdit }: Props) {
   return (
     <>
       <span className="stat-title">Budget Information</span>
-      <div className="flex flex-col w-min">
+      <div className="flex flex-col">
         <div className="flex items-end gap-2">
           <h2 className="text-4xl">{budget.name}</h2>
-          <button type="button" className="btn btn-circle btn-ghost btn-sm p-2">
+          <button
+            onClick={onEdit}
+            type="button"
+            className="btn btn-circle btn-ghost btn-sm p-2"
+          >
             <FontAwesomeIcon icon={faPen} className="w-4 h-4" />
           </button>
         </div>

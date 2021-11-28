@@ -27,7 +27,7 @@ export const GET_RECORDS_UNDER_BUDGET = gql`
       where: {
         AND: [
           { date: { gte: $startDate, lte: $endDate } }
-          { labels: { hasEvery: $includedLabels } }
+          { labels: { hasSome: $includedLabels } }
           { NOT: [{ labels: { hasSome: $excludedLabels } }] }
         ]
       }
@@ -55,6 +55,14 @@ export const GET_BUDGET_BY_ID = gql`
 export const CREATE_BUDGET = gql`
   mutation ($data: BudgetCreateInput!) {
     createBudget(data: $data) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_BUDGET = gql`
+  mutation ($data: BudgetUpdateInput!, $where: BudgetWhereUniqueInput!) {
+    updateBudget(data: $data, where: $where) {
       id
     }
   }

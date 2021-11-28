@@ -9,7 +9,7 @@ import { BUDGET_LIST_QUERY } from "../../queries/budgets";
 import LoadingSpinnerCover from "../../components/LoadingSpinnerCover";
 import CenterNotice from "../../components/CenterNotice";
 import BudgetList from "../../components/Budgets/BudgetList";
-import CreateBudgetModal from "../../components/Budgets/CreateBudgetModal";
+import BudgetModal from "../../components/Budgets/BudgetModal";
 
 type QueryResultType = {
   budgets: Budget[];
@@ -39,7 +39,7 @@ export default function BudgetsPage() {
   return (
     <div className="flex flex-col h-full gap-4 items-stretch">
       {addingBudget && (
-        <CreateBudgetModal
+        <BudgetModal
           onCreate={onNewBudgetCreated}
           onClose={() => setIsAddingBudget(false)}
         />

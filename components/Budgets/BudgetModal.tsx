@@ -1,67 +1,56 @@
 import { useMutation } from "@apollo/client";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Budget } from "@prisma/client";
-import { FormikErrors, useFormik } from "formik";
+import { useFormik } from "formik";
 import toast from "react-hot-toast";
-import { BudgetCreateInput } from "../../prisma/generated/type-graphql";
-import { CREATE_BUDGET } from "../../queries/budgets";
+import {
+  BudgetModalMap,
+  BudgetModalMode,
+  DEFAULT_FORM_VALUE,
+  FormValueType,
+} from "../../constants/budgets";
+import { CREATE_BUDGET, UPDATE_BUDGET } from "../../queries/budgets";
+import {
+  getCreateBudgetVariables,
+  getUpdateBudgetVariables,
+  validateForm,
+} from "../../utils/budgets";
 import { NumberInput, TextInput } from "../Form/Input";
 import LabelsInput from "../Form/LabelsInput";
 
 type Props = {
   onClose: () => void;
   onCreate: () => void;
-};
-type FormValueType = Omit<Budget, "id">;
-const DEFAULT_FORM_VALUE: FormValueType = {
-  amount: 0,
-  name: "",
-  includedLabels: [],
-  excludedLabels: [],
-};
-const validateForm = (
-  pendingBudget: FormValueType
-): FormikErrors<FormValueType> => {
-  const { amount, name, includedLabels, excludedLabels } = pendingBudget;
-  const errors: FormikErrors<FormValueType> = {};
-  if (amount <= 0) {
-    errors.amount = "Invalid amount";
-  }
-  if (!name) {
-    errors.name = "Invalid budget name";
-  }
-  const allLabels = [...includedLabels, ...excludedLabels];
-  if (allLabels.length === 0) {
-    const errorMessage = "At least one of the labels have to be provided";
-    errors.includedLabels = errorMessage;
-    errors.excludedLabels = errorMessage;
-  }
-  if ([...new Set(allLabels)].length < allLabels.length) {
-    const errorMessage = "Some inputs are repeated";
-    errors.includedLabels = errorMessage;
-    errors.excludedLabels = errorMessage;
-  }
-  return errors;
+  initialValue?: FormValueType;
 };
 
-export default function CreateBudgetModal({ onClose, onCreate }: Props) {
-  const [createBudget] = useMutation(CREATE_BUDGET);
+export default function BudgetModal({
+  onClose,
+  onCreate,
+  initialValue,
+}: Props) {
+  const isUpdating = !!initialValue?.id;
+  const modalMode = isUpdating
+    ? BudgetModalMode.UPDATING_BUDGET
+    : BudgetModalMode.CREATING_BUDGET;
+  const assets = BudgetModalMap[modalMode];
+
+  const [mutate] = useMutation(isUpdating ? UPDATE_BUDGET : CREATE_BUDGET);
   const onSubmit = async () => {
-    const data: BudgetCreateInput = {
-      ...values,
-      includedLabels: { set: values.includedLabels },
-      excludedLabels: { set: values.excludedLabels },
-    };
+    const variables = isUpdating
+      ? getUpdateBudgetVariables(values, initialValue.id)
+      : getCreateBudgetVariables(values);
     try {
-      await createBudget({ variables: { data } });
+      await mutate({
+        variables,
+      });
       onCreate();
     } catch (e) {
       toast.error(e);
     }
   };
   const formik = useFormik({
-    initialValues: DEFAULT_FORM_VALUE,
+    initialValues: initialValue ?? DEFAULT_FORM_VALUE,
     onSubmit,
     validate: validateForm,
   });
@@ -84,7 +73,12 @@ export default function CreateBudgetModal({ onClose, onCreate }: Props) {
           />
         </button>
         <h3 className="text-lg font-bold pb-4 py-0 my-0">
-          Create a new budget
+          {assets.header}
+          {isUpdating && (
+            <div className="text-xs font-bold text-opacity-70">
+              id: {initialValue?.id}
+            </div>
+          )}
         </h3>
         <form
           onSubmit={formik.handleSubmit}
@@ -128,9 +122,9 @@ export default function CreateBudgetModal({ onClose, onCreate }: Props) {
             setFieldValue={formik.setFieldValue}
           />
           <div className="flex flex-grow-0 col-span-full pt-4 items-center justify-end">
-            <button type="submit" className="btn btn-primary">
-              <FontAwesomeIcon icon={faPlus} className="w-4 h-4" />
-              Add budget
+            <button type="submit" className="btn btn-primary flex gap-1">
+              <FontAwesomeIcon icon={assets.ctaIcon} className="w-4 h-4" />
+              {assets.cta}
             </button>
           </div>
         </form>
