@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@apollo/client";
 import { Budget } from "@prisma/client";
 
-import { BUDGET_LIST_QUERY } from "../queries/budgets";
+import { BUDGET_LIST_QUERY } from "../../queries/budgets";
 
-import LoadingSpinnerCover from "../components/LoadingSpinnerCover";
-import CenterNotice from "../components/CenterNotice";
-import BudgetList from "../components/Budgets/BudgetList";
-import CreateBudgetModal from "../components/Budgets/CreateBudgetModal";
+import LoadingSpinnerCover from "../../components/LoadingSpinnerCover";
+import CenterNotice from "../../components/CenterNotice";
+import BudgetList from "../../components/Budgets/BudgetList";
+import CreateBudgetModal from "../../components/Budgets/CreateBudgetModal";
 
 type QueryResultType = {
   budgets: Budget[];

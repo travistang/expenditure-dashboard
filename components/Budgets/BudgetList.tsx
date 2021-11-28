@@ -1,12 +1,15 @@
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Budget } from "@prisma/client";
+import { useRouter } from "next/router";
 
 type Props = {
   budgets: Budget[];
 };
 
 export default function BudgetList({ budgets }: Props) {
+  const router = useRouter();
+  const goToBudgetDetailPage = (id: string) => () => router.push(`/budgets/${id}`);
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden">
       <table className="table w-full table-compact">
@@ -22,7 +25,7 @@ export default function BudgetList({ budgets }: Props) {
         <tbody className="overflow-y-auto">
           {budgets.map((budget) => (
             <tr
-              onClick={console.log}
+              onClick={goToBudgetDetailPage(budget.id)}
               key={budget.id}
               className="cursor-pointer hover:bg-primary-focus"
             >

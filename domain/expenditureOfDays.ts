@@ -50,3 +50,23 @@ export const expenditureOfEachDay = ({
     };
   }, {});
 };
+
+export const accumulatedExpenditureOfEachDay = ({
+  fromDate,
+  toDate,
+  records,
+}: ExpenditureOfEachDayProps): Record<string, number> => {
+  const eachDayRecords = expenditureOfEachDay({ fromDate, toDate, records });
+  const eachDayRecordsSortedEntries = Object.entries(eachDayRecords).sort(
+    ([dateA], [dateB]) => new Date(dateA).getTime() - new Date(dateB).getTime()
+  );
+  const accumulatedEntries = eachDayRecordsSortedEntries.reduce(
+    (entries, [date, data]) => {
+      if (entries.length === 0) return [[date, data.amount]];
+      const previousEntry = entries[entries.length - 1];
+      return [...entries, [date, data.amount + previousEntry[1]]];
+    },
+    []
+  );
+  return Object.fromEntries(accumulatedEntries);
+};

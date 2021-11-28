@@ -1,14 +1,8 @@
-import React from "react";
 import { useQuery } from "@apollo/client";
 import { ExpenditureRecord } from "@prisma/client";
 import { format, startOfMonth, endOfMonth } from "date-fns";
 
 import { EXPENDITURE_OF_MONTH } from "./queries";
-import {
-  computeLabelStatistics,
-  LabelStatistics,
-  LabelStatisticsMap,
-} from "../../domain/labelStatistics";
 
 export type MonthlyExpenditureAggregationType = {
   records: ExpenditureRecord[];

@@ -1,28 +1,20 @@
 import React from "react";
 import classnames from "classnames";
 
-import { FilterValueReducerAction } from "../../utils/lists";
 import { hasPhraseMatches } from "../../utils/strings";
 
 type Props = {
-  dispatchFilter: React.Dispatch<FilterValueReducerAction>;
+  onClick: () => void;
   label: string;
   searchString: string;
 };
 
-export default function LabelTag({
-  dispatchFilter,
-  label,
-  searchString,
-}: Props) {
+export default function LabelTag({ onClick, label, searchString }: Props) {
   return (
     <span
       onClick={(e) => {
         e.stopPropagation();
-        dispatchFilter({
-          type: "toggleLabel",
-          payload: { search: label },
-        });
+        onClick();
       }}
       className={classnames(
         "badge",

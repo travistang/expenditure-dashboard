@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ExpenditureRecordWithLabel } from "../Lists/RecordDetailModal/types";
+import { ExpenditureRecordWithLabel } from "../RecordList/RecordDetailModal/types";
 import { FormikErrors } from "formik";
 
 type Props<T> = {

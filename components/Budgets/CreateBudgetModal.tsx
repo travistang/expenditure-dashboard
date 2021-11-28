@@ -68,7 +68,7 @@ export default function CreateBudgetModal({ onClose, onCreate }: Props) {
   const values = formik.values;
 
   return (
-    <div className="inset-0 fixed z-10 flex flex-col items-stretch justify-end md:items-center md:justify-center bg-base-300 bg-opacity-60">
+    <div className="inset-0 fixed z-20 flex flex-col items-stretch justify-end md:items-center md:justify-center bg-base-300 bg-opacity-60">
       <div
         className="rounded-t-2xl md:rounded-b-2xl bg-base-100 p-4 relative"
         onClick={(e) => e.stopPropagation()}
