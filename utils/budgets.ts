@@ -51,6 +51,8 @@ export const getUpdateBudgetVariables = (
     data: {
       name: { set: values.name },
       amount: { set: values.amount },
+      isGrossBudget: { set: values.isGrossBudget },
+      matchAllLabels: { set: values.matchAllLabels },
       includedLabels: { set: values.includedLabels },
       excludedLabels: { set: values.excludedLabels },
     },

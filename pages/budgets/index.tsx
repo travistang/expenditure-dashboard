@@ -40,7 +40,7 @@ export default function BudgetsPage() {
     <div className="flex flex-col h-full gap-4 items-stretch">
       {addingBudget && (
         <BudgetModal
-          onCreate={onNewBudgetCreated}
+          onMutate={onNewBudgetCreated}
           onClose={() => setIsAddingBudget(false)}
         />
       )}

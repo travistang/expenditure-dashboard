@@ -1,4 +1,4 @@
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Budget } from "@prisma/client";
 import { useRouter } from "next/router";
@@ -9,7 +9,8 @@ type Props = {
 
 export default function BudgetList({ budgets }: Props) {
   const router = useRouter();
-  const goToBudgetDetailPage = (id: string) => () => router.push(`/budgets/${id}`);
+  const goToBudgetDetailPage = (id: string) => () =>
+    router.push(`/budgets/${id}`);
   return (
     <div className="flex-1 overflow-y-auto overflow-x-hidden">
       <table className="table w-full table-compact">
@@ -17,6 +18,8 @@ export default function BudgetList({ budgets }: Props) {
           <tr>
             <th className="sticky top-0 z-0">Name</th>
             <th className="sticky top-0 z-0">amount</th>
+            <th className="sticky top-0 z-0">Gross budget</th>
+            <th className="sticky top-0 z-0">Match every labels</th>
             <th className="sticky top-0 z-0">including labels</th>
             <th className="sticky top-0 z-0">excluding labels</th>
             <th className="sticky top-0 z-0" />
@@ -31,6 +34,20 @@ export default function BudgetList({ budgets }: Props) {
             >
               <td>{budget.name}</td>
               <td>{budget.amount.toFixed(2)}€</td>
+              <td className="text-center">
+                {budget.isGrossBudget && (
+                  <div className="w-full flex items-center justify-center">
+                    <FontAwesomeIcon icon={faCheck} className="w-4 h-4" />
+                  </div>
+                )}
+              </td>
+              <td className="text-center">
+                {budget.matchAllLabels && (
+                  <div className="w-full flex items-center justify-center">
+                    <FontAwesomeIcon icon={faCheck} className="w-4 h-4" />
+                  </div>
+                )}
+              </td>
               <td>
                 <div className="flex flex-wrap gap-1">
                   {Array.from(budget.includedLabels)

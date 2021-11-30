@@ -11,6 +11,8 @@ export const BUDGET_LIST_QUERY = gql`
       id
       includedLabels
       excludedLabels
+      isGrossBudget
+      matchAllLabels
       amount
       name
     }
@@ -46,6 +48,8 @@ export const GET_BUDGET_BY_ID = gql`
       id
       includedLabels
       excludedLabels
+      isGrossBudget
+      matchAllLabels
       amount
       name
     }

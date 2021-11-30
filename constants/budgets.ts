@@ -63,6 +63,8 @@ export const BudgetUsageColor: Record<BudgetUsageLevel, Colors> = {
 export const DEFAULT_FORM_VALUE: FormValueType = {
   amount: 0,
   name: "",
+  isGrossBudget: false,
+  matchAllLabels: false,
   includedLabels: [],
   excludedLabels: [],
 };

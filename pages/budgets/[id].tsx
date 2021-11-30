@@ -61,6 +61,11 @@ export default function BudgetDetailPage() {
   const budgetUsageStatus = getBudgetUsageLevel(percentage);
   const backgroundColor = BudgetUsageColor[budgetUsageStatus].background;
 
+  const onUpdateBudget = () => {
+    setUpdatingBudget(false);
+    refetchBudget();
+  };
+
   useEffect(() => {
     if (data?.budget) {
       fetchRecords({
@@ -81,7 +86,7 @@ export default function BudgetDetailPage() {
         <BudgetModal
           initialValue={data?.budget}
           onClose={() => setUpdatingBudget(false)}
-          onCreate={refetchBudget}
+          onMutate={onUpdateBudget}
         />
       )}
       <div className="sticky top-0 col-span-full grid grid-cols-12 items-end pb-2 z-10 bg-base-200">

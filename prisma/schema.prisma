@@ -31,8 +31,12 @@ model UploadRequest {
 }
 
 model Budget {
-  id             String   @id @default(cuid())
-  name           String   @unique
+  id   String @id @default(cuid())
+  name String @unique
+
+  isGrossBudget  Boolean @default(false)
+  matchAllLabels Boolean @default(false)
+
   includedLabels String[]
   excludedLabels String[]
   amount         Float

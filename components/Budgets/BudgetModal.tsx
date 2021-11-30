@@ -15,18 +15,19 @@ import {
   getUpdateBudgetVariables,
   validateForm,
 } from "../../utils/budgets";
+import Checkbox from "../Form/Checkbox";
 import { NumberInput, TextInput } from "../Form/Input";
 import LabelsInput from "../Form/LabelsInput";
 
 type Props = {
   onClose: () => void;
-  onCreate: () => void;
+  onMutate: () => void;
   initialValue?: FormValueType;
 };
 
 export default function BudgetModal({
   onClose,
-  onCreate,
+  onMutate,
   initialValue,
 }: Props) {
   const isUpdating = !!initialValue?.id;
@@ -44,7 +45,7 @@ export default function BudgetModal({
       await mutate({
         variables,
       });
-      onCreate();
+      onMutate();
     } catch (e) {
       toast.error(e);
     }
@@ -102,6 +103,28 @@ export default function BudgetModal({
             name="amount"
             accent="primary"
             value={formik.values.amount}
+          />
+          <Checkbox
+            className=" my-4 col-start-1 col-span-6"
+            checked={formik.values.isGrossBudget}
+            label="Counted as gross budget"
+            onToggle={() =>
+              formik.setFieldValue(
+                "isGrossBudget",
+                !formik.values.isGrossBudget
+              )
+            }
+          />
+          <Checkbox
+            className="col-span-6"
+            checked={formik.values.matchAllLabels}
+            label="Match records against all included labels"
+            onToggle={() =>
+              formik.setFieldValue(
+                "matchAllLabels",
+                !formik.values.matchAllLabels
+              )
+            }
           />
           <LabelsInput
             name="includedLabels"
