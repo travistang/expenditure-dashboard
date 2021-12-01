@@ -1,6 +1,4 @@
 import React from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@apollo/client";
 import { ExpenditureRecord } from "@prisma/client";
 
@@ -48,9 +46,6 @@ const List: React.FC = () => {
     setCurrentPage(0);
   }, [filter]);
 
-  const onStartCreatingRecord = () => {
-    // setSelectedRecord(DEFAULT_EXPENDITURE_RECORD);
-  };
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex items-center gap-2 flex-wrap flex-row-reverse md:flex-nowrap md:flex-row w-full">

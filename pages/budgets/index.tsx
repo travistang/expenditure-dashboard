@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { faMoneyBill, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "@apollo/client";
@@ -10,24 +10,23 @@ import LoadingSpinnerCover from "../../components/LoadingSpinnerCover";
 import CenterNotice from "../../components/CenterNotice";
 import BudgetList from "../../components/Budgets/BudgetList";
 import BudgetModal from "../../components/Budgets/BudgetModal";
+import { BudgetWithUsage } from "../../domain/budgetUsage";
+import InputBase from "../../components/Form/Input";
+import { format } from "date-fns";
 
 type QueryResultType = {
-  budgets: Budget[];
-  aggregateBudgets: {
-    _count: { _all: number };
-    _sum: { amount: number };
-    _avg: { amount: number };
-    _min: { amount: number };
-    _max: { amount: number };
-  };
+  budgets: BudgetWithUsage[];
 };
 
 export default function BudgetsPage() {
-  const [addingBudget, setIsAddingBudget] = React.useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [addingBudget, setIsAddingBudget] = useState(false);
   const { data, loading, refetch } = useQuery<QueryResultType>(
     BUDGET_LIST_QUERY,
     {
-      variables: {},
+      variables: {
+        date: selectedDate,
+      },
     }
   );
 
@@ -44,7 +43,15 @@ export default function BudgetsPage() {
           onClose={() => setIsAddingBudget(false)}
         />
       )}
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-between">
+        <InputBase
+          name="date"
+          label=""
+          type="month"
+          className="ml-2"
+          value={format(selectedDate, "yyyy-MM")}
+          onChange={(e) => setSelectedDate(new Date(e.target.value))}
+        />
         <button
           onClick={() => setIsAddingBudget(true)}
           type="button"

@@ -7,6 +7,7 @@ import { resolvers } from "./prisma/generated/type-graphql";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import prisma from "./prisma-client";
+import { CustomBudgetResolver } from "./backend/budgets";
 
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
@@ -15,7 +16,10 @@ const handle = nextApp.getRequestHandler();
 nextApp
   .prepare()
   .then(async () => {
-    const schema = await buildSchema({ resolvers, validate: false });
+    const schema = await buildSchema({
+      resolvers: [...resolvers, CustomBudgetResolver],
+      validate: false,
+    });
     return schema;
   })
   .then((schema) => new ApolloServer({ schema, context: () => ({ prisma }) }))

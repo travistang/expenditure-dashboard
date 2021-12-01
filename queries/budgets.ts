@@ -6,6 +6,7 @@ export const BUDGET_LIST_QUERY = gql`
     $orderBy: [BudgetOrderByInput!]
     $take: Int
     $skip: Int
+    $date: DateTime
   ) {
     budgets(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
       id
@@ -15,6 +16,7 @@ export const BUDGET_LIST_QUERY = gql`
       matchAllLabels
       amount
       name
+      usage(date: $date)
     }
   }
 `;

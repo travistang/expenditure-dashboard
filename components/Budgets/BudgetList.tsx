@@ -1,10 +1,13 @@
+import classnames from "classnames";
 import { faCheck, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Budget } from "@prisma/client";
 import { useRouter } from "next/router";
+import { BudgetUsageColor, getBudgetUsageLevel } from "../../constants/budgets";
+import { budgetUsagePercentage } from "../../domain/budgetUsage";
 
 type Props = {
-  budgets: Budget[];
+  budgets: (Budget & { usage: number })[];
 };
 
 export default function BudgetList({ budgets }: Props) {
@@ -17,7 +20,9 @@ export default function BudgetList({ budgets }: Props) {
         <thead>
           <tr>
             <th className="sticky top-0 z-0">Name</th>
-            <th className="sticky top-0 z-0">amount</th>
+            <th className="sticky top-0 z-0">Amount</th>
+            <th className="sticky top-0 z-0">Usage</th>
+            <th className="sticky top-0 z-0">Usage %</th>
             <th className="sticky top-0 z-0">Gross budget</th>
             <th className="sticky top-0 z-0">Match every labels</th>
             <th className="sticky top-0 z-0">including labels</th>
@@ -34,6 +39,17 @@ export default function BudgetList({ budgets }: Props) {
             >
               <td>{budget.name}</td>
               <td>{budget.amount.toFixed(2)}€</td>
+              <td>{budget.usage.toFixed(2)}€</td>
+              <td
+                className={classnames(
+                  "font-bold",
+                  BudgetUsageColor[
+                    getBudgetUsageLevel(budgetUsagePercentage(budget))
+                  ].text
+                )}
+              >
+                {(budgetUsagePercentage(budget) * 100).toFixed(2)}%
+              </td>
               <td className="text-center">
                 {budget.isGrossBudget && (
                   <div className="w-full flex items-center justify-center">
