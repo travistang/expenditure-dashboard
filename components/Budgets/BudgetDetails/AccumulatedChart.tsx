@@ -46,7 +46,7 @@ function AccumulatedChart({ records, budgetAmount, fromDate, toDate }: Props) {
         lineWidth={6}
         useMesh
         axisBottom={{ tickRotation: -45, legend: "Date" }}
-        margin={{ top: 12, bottom: 64, left: 48, right: 36 }}
+        margin={{ top: 12, bottom: 64, left: 48, right: 48 }}
       />
     </>
   );

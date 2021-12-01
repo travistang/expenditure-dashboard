@@ -33,7 +33,7 @@ export const expenditureOfEachDay = ({
   if (numDaysBetween <= 1) {
     return {};
   }
-  const rangeN = Array(numDaysBetween)
+  const rangeN = Array(numDaysBetween + 1)
     .fill(1)
     .map((_, i) => i);
   return rangeN.reduce((result, df) => {

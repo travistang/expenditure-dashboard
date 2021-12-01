@@ -37,7 +37,6 @@ export default function BudgetDetailPage() {
   const [searchDate, setSearchDate] = useState(new Date());
   const fromDate = startOfMonth(searchDate);
   const toDate = endOfMonth(searchDate);
-
   const [updatingBudget, setUpdatingBudget] = useState(false);
 
   const {
