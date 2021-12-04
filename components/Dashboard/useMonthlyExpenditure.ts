@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { ExpenditureRecord } from "@prisma/client";
-import { format, startOfMonth, endOfMonth } from "date-fns";
+import { startOfMonth, endOfMonth } from "date-fns";
+import { yyyyMMdd } from "../../utils/dates";
 
 import { EXPENDITURE_OF_MONTH } from "./queries";
 
@@ -11,8 +12,8 @@ export type MonthlyExpenditureAggregationType = {
 export default function useMonthlyExpenditure(
   date = new Date()
 ): MonthlyExpenditureAggregationType {
-  const startDate = format(startOfMonth(date), "yyyy-MM-dd");
-  const endDate = format(endOfMonth(date), "yyyy-MM-dd");
+  const startDate = yyyyMMdd(startOfMonth(date));
+  const endDate = yyyyMMdd(endOfMonth(date));
   const { data, loading } = useQuery<{
     expenditureRecords: ExpenditureRecord[];
   }>(EXPENDITURE_OF_MONTH, { variables: { startDate, endDate } });

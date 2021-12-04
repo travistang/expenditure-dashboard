@@ -8,6 +8,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import prisma from "./prisma-client";
 import { CustomBudgetResolver } from "./backend/budgets";
+import initializeJobs from "./jobs";
 
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
@@ -15,6 +16,10 @@ const handle = nextApp.getRequestHandler();
 
 nextApp
   .prepare()
+  .then(() => {
+    const jobs = initializeJobs(prisma);
+    jobs.forEach((job) => job.start());
+  })
   .then(async () => {
     const schema = await buildSchema({
       resolvers: [...resolvers, CustomBudgetResolver],

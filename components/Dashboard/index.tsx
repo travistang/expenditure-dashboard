@@ -19,6 +19,7 @@ import {
 } from "../../domain/budgetUsage";
 import Stats from "./Stats";
 import { BudgetUsageColor, getBudgetUsageLevel } from "../../constants/budgets";
+import BudgetOverviewWidget from "./BudgetOverviewWidget";
 
 type BudgetListQueryResponseType = {
   budgets: BudgetWithUsage[];
@@ -38,12 +39,12 @@ export default function Dashboard() {
   const budgetLimit = grossBudgetLimit(budgets);
   const usagePercentage = grossUsage / (budgetLimit || 1);
   return (
-    <div className="grid grid-cols-6 md:grid-cols-12 md:p-4 gap-4">
+    <div className="grid grid-cols-6 md:grid-cols-12 md:p-4 gap-4 overflow-y-auto">
       <InputBase
         name="date"
         label=""
         type="month"
-        className="col-span-full md:col-start-9 md:col-end-13 mr-2"
+        className="sticky top-0 col-span-full md:col-start-9 md:col-end-13 mr-2"
         value={format(selectedDate, "yyyy-MM")}
         onChange={(e) => setSelectedDate(new Date(e.target.value))}
       />
@@ -76,6 +77,7 @@ export default function Dashboard() {
           subtitle={currentMonthString}
         />
       </div>
+      <BudgetOverviewWidget budgets={budgetsData?.budgets ?? []} />
       <MostExpenditureLabelStats
         records={records}
         className="grid-flow-row sm:grid-flow-col stats col-span-full overflow-hidden"

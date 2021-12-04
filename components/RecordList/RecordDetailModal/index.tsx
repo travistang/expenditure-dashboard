@@ -20,6 +20,7 @@ import {
   expenditureRecordDataToUpdateData,
   expenditureRecordDataToCreateData,
 } from "../../../utils/form";
+import { yyyyMMddHHmmss } from "../../../utils/dates";
 
 const DEFAULT_FORM_VALUE: ExpenditureRecordWithLabel = {
   ...DEFAULT_EXPENDITURE_RECORD,
@@ -131,7 +132,7 @@ export default function RecordDetailModal({ record, refetch, onClose }: Props) {
         {record.recordedAt && (
           <h6 className="-mt-4 opacity-60 text-xs font-bold uppercase">
             Added at{" "}
-            {format(new Date(record.recordedAt), "yyyy-MM-dd hh:mm:ss")}
+            {yyyyMMddHHmmss(new Date(record.recordedAt))}
           </h6>
         )}
         <form

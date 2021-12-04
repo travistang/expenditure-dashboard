@@ -16,6 +16,6 @@ export const budgetUsagePercentage = (
   budget: BudgetWithUsage,
   timesHundred = false
 ): number => {
-  const ratio = budget.amount / (budget.usage || 1);
+  const ratio = budget.usage / (budget.amount || 1);
   return timesHundred ? ratio * 100 : ratio;
 };

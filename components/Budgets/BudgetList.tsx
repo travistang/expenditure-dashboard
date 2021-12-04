@@ -48,7 +48,7 @@ export default function BudgetList({ budgets }: Props) {
                   ].text
                 )}
               >
-                {(budgetUsagePercentage(budget) * 100).toFixed(2)}%
+                {budgetUsagePercentage(budget, true).toFixed(2)}%
               </td>
               <td className="text-center">
                 {budget.isGrossBudget && (
