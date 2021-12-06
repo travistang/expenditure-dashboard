@@ -9,7 +9,7 @@ type Props = {
 };
 export default function BudgetOverviewWidget({ budgets }: Props) {
   return (
-    <div className="rounded-2xl col-span-full grid gap-0 grid-cols-12 stat min-h-16 ">
+    <div className="flex-shrink-0 rounded-2xl col-span-full grid gap-0 grid-cols-12 stat min-h-16 ">
       <span className="col-span-full pb-4 stat-title">Budget Overview</span>
       {budgets.map((budget) => (
         <div

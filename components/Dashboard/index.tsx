@@ -39,7 +39,7 @@ export default function Dashboard() {
   const budgetLimit = grossBudgetLimit(budgets);
   const usagePercentage = grossUsage / (budgetLimit || 1);
   return (
-    <div className="grid grid-cols-6 md:grid-cols-12 md:p-4 gap-4 overflow-y-auto">
+    <div className="grid grid-cols-6 md:grid-cols-12 md:p-4 gap-4 overflow-auto">
       <InputBase
         name="date"
         label=""

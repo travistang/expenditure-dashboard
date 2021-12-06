@@ -1,5 +1,3 @@
-import logger from "../logger";
-
 export const caseInsensitiveMatch = (a: string, b: string) =>
   a.toLowerCase() === b.toLowerCase();
 
@@ -21,7 +19,6 @@ export const safeParseJSON = (str: string): any => {
   );
 
   try {
-    logger.warn(JSON.stringify({ sanitizedString }));
     return JSON.parse(sanitizedString);
   } catch (e) {
     return null;
