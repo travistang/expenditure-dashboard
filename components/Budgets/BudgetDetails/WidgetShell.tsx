@@ -5,7 +5,7 @@ import LoadingSpinnerCover from "../../LoadingSpinnerCover";
 
 export default function withWidgetShell<T>(Component: React.FC<T>) {
   const shellClassName = "relative stat flex flex-col rounded-2xl";
-  return function ({
+  return function WidgetShell({
     loading,
     className,
     ...props

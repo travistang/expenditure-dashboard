@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const RECORD_LIST_QUERY = gql`
   query expenditureRecordList(
     $where: ExpenditureRecordWhereInput!
-    $orderBy: [ExpenditureRecordOrderByInput!]
+    $orderBy: [ExpenditureRecordOrderByWithRelationInput!]
     $take: Int!
     $skip: Int!
   ) {

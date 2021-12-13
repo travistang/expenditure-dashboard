@@ -1,6 +1,7 @@
 import winston, { createLogger } from "winston";
 
 export default createLogger({
+  format: winston.format.json(),
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
@@ -8,6 +9,6 @@ export default createLogger({
         winston.format.simple()
       ),
     }),
-    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "error.log", level: "warn" }),
   ],
 });

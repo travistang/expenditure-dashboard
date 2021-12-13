@@ -35,8 +35,8 @@ export default function BudgetDetailPage() {
   const { query, push } = useRouter();
 
   const [searchDate, setSearchDate] = useState(new Date());
-  const fromDate = startOfMonth(searchDate);
-  const toDate = endOfMonth(searchDate);
+  const fromDate = React.useMemo(() => startOfMonth(searchDate), [searchDate]);
+  const toDate = React.useMemo(() => endOfMonth(searchDate), [searchDate]);
   const [updatingBudget, setUpdatingBudget] = useState(false);
 
   const {
@@ -76,7 +76,7 @@ export default function BudgetDetailPage() {
         },
       });
     }
-  }, [data, searchDate]);
+  }, [data, fetchRecords, fromDate, toDate]);
 
   return (
     <div className="relative auto-rows-min grid grid-cols-12 h-full gap-4 w-full overflow-y-auto">

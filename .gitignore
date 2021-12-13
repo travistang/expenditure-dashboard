@@ -6,3 +6,10 @@ prisma/generated/*
 
 # No loggings
 *.log
+
+# No env variables and data
+.env.prod
+.data/
+
+# No build files
+dist/

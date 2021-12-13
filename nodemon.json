@@ -1,5 +1,15 @@
 {
-  "watch": ["./prisma/*", "./components/*", "./pages/*"],
+  "watch": [
+    "./prisma/*",
+    "./components/*",
+    "./pages/*",
+    "./backend/*",
+    "server.ts",
+    "./jobs/*",
+    "./constants/*",
+    "./contexts/*",
+    "./domain/*"
+  ],
   "exec": "ts-node --project tsconfig.server.json server.ts",
   "ext": "js ts"
 }

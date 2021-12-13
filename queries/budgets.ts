@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const BUDGET_LIST_QUERY = gql`
   query budgetList(
     $where: BudgetWhereInput
-    $orderBy: [BudgetOrderByInput!]
+    $orderBy: [BudgetOrderByWithRelationInput!]
     $take: Int
     $skip: Int
     $date: DateTime
