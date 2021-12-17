@@ -40,10 +40,10 @@ nextApp
     app.use(express.json());
     app.use(cookieParser());
 
-    // if (process.env.NODE_ENV === "production") {
-    app.use(authMiddleware);
-    app.post("/login", loginHandler);
-    // }
+    if (process.env.NODE_ENV === "production") {
+      app.use(authMiddleware);
+      app.post("/login", loginHandler);
+    }
 
     app.use("/graphql", (req, res, next) => {
       logger.info(`[GraphQL Request]`, { request: req.body });
