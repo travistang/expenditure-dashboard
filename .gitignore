@@ -12,4 +12,5 @@ prisma/generated/*
 .data/
 
 # No build files
+output.css
 dist/

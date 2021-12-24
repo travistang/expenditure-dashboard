@@ -1,11 +1,10 @@
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
 import { Request, Response, NextFunction } from "express";
 import logger from "../../logger";
 import { format } from "date-fns";
 
 export const JWT_SECRET = process.env.JWT_SECRET || "0xdeadbeef";
-const WHITELIST_PATH = [/^\/login$/, /^\/api\/login$/, /.*\.ico$/];
+const WHITELIST_PATH = [/^\/login$/, /^\/api\/login$/, /.*\.ico$/, /.*\.css/];
 
 function reportUnauthorized(req: Request, res: Response) {
   logger.warn(

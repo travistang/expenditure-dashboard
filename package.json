@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon",
-    "build": "NODE_ENV=production next build && tsc --project tsconfig.server.json",
+    "build:css": "npx tailwindcss build -o output.css",
+    "build": "NODE_ENV=production yarn build:css && next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "test": "jest"
   },

@@ -18,3 +18,7 @@ services:
       - ./.env.prod
     depends_on:
       - db
+networks:
+  default:
+    external:
+      name: top-bridge-network

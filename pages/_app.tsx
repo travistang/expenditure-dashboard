@@ -23,6 +23,7 @@ function App({ Component, pageProps }: AppProps) {
     <ApolloProvider client={client}>
       <Head>
         <title>Expenditure Dashboard</title>
+        <link rel="stylesheet" href="output.css" />
         <meta
           name="description"
           content="A dashboard that visualize expenditures you made"
