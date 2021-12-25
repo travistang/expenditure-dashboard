@@ -15,6 +15,13 @@ generator typegraphql {
   output   = "../prisma/generated/type-graphql"
 }
 
+enum Currency {
+  EUR
+  PLN
+  HKD
+  USD
+}
+
 model ExpenditureRecord {
   id          String   @id
   date        DateTime
@@ -22,6 +29,8 @@ model ExpenditureRecord {
   description String
   labels      String[]
   amount      Float
+  currency    Currency @default(EUR)
+  exchangeRate Float @default(1)
 }
 
 model UploadRequest {

@@ -1,10 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prismaClient from "../../../prisma-client";
-import { ExpenditureRecord } from ".prisma/client";
-import { differenceInMinutes } from "date-fns";
+import logger from "../../../logger";
+import {
+  ExpenditureInput,
+  expenditureValid,
+  transformExpenditureInput,
+} from "./_utils";
 
 type Payload = {
-  expenditures: (Omit<ExpenditureRecord, "date"> & { date: string })[];
+  expenditures: ExpenditureInput[];
 };
 export default async function handler(
   req: NextApiRequest,
@@ -30,46 +34,23 @@ export default async function handler(
   if (Array.isArray(id)) {
     return res.status(400).json({ error: "Multiple id found" });
   }
-  const uploadRequestRecord = await prismaClient.uploadRequest.findFirst({
-    where: { id },
-  });
-  if (!uploadRequestRecord) {
-    return res.status(404).json({ error: "Record not found" });
-  }
 
-  if (
-    differenceInMinutes(new Date(), new Date(uploadRequestRecord.createdAt)) > 1
-  ) {
-    await prismaClient.uploadRequest.delete({ where: { id } });
-    return res.status(400).json({ error: "Request timed out" });
-  }
   try {
     const payload: Payload = data;
-    if (
-      !payload?.expenditures?.every((expenditure) => {
-        const isDateValid = !Number.isNaN(new Date(expenditure.date).getTime());
-        const isLabelValid =
-          Array.isArray(expenditure.labels) &&
-          expenditure.labels.every((label) => typeof label === "string");
-        const hasFieldMissing =
-          !expenditure.date || !expenditure.description || !expenditure.id;
-
-        return isDateValid && isLabelValid && !hasFieldMissing;
-      })
-    ) {
+    if (!payload?.expenditures?.every(expenditureValid)) {
       return res.status(400).send("invalid data");
     }
-    const transformedRecords = payload.expenditures.map((expenditure) => ({
-      ...expenditure,
-      date: new Date(expenditure.date),
-      recordedAt: new Date(),
-    }));
+    const transformedRecords = payload.expenditures.map(
+      transformExpenditureInput
+    );
     const createResult = await prismaClient.expenditureRecord.createMany({
       data: transformedRecords,
       skipDuplicates: true,
     });
     return res.status(200).json({ count: createResult.count });
   } catch (e) {
+    logger.error(e);
+    console.log({ e });
     return res.status(400).json({ error: "Failed to decrypt payload" });
   }
 }
