@@ -7,4 +7,6 @@ export const DEFAULT_EXPENDITURE_RECORD: ExpenditureRecord = {
   date: new Date(),
   recordedAt: new Date(),
   amount: 0,
+  currency: "EUR",
+  exchangeRate: 1
 };

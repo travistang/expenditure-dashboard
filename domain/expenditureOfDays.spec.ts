@@ -13,6 +13,8 @@ describe("expenditureOfDays", () => {
           labels: [],
           id: "1",
           recordedAt: new Date(),
+          currency: null,
+          exchangeRate: 1,
         },
         {
           date: parseISO("2021-11-01"),
@@ -21,6 +23,8 @@ describe("expenditureOfDays", () => {
           labels: [],
           id: "2",
           recordedAt: new Date(),
+          currency: null,
+          exchangeRate: 1,
         },
         {
           date: parseISO("2021-11-02"),
@@ -29,6 +33,8 @@ describe("expenditureOfDays", () => {
           labels: [],
           id: "3",
           recordedAt: new Date(),
+          currency: null,
+          exchangeRate: 1,
         },
         {
           date: parseISO("2021-11-03"),
@@ -37,6 +43,8 @@ describe("expenditureOfDays", () => {
           labels: [],
           id: "4",
           recordedAt: new Date(),
+          currency: null,
+          exchangeRate: 1,
         },
         {
           date: parseISO("2021-11-04"),
@@ -45,6 +53,8 @@ describe("expenditureOfDays", () => {
           labels: [],
           id: "5",
           recordedAt: new Date(),
+          currency: null,
+          exchangeRate: 1,
         },
       ];
       const expenditureEachDay = expenditureOfEachDay({
@@ -57,6 +67,7 @@ describe("expenditureOfDays", () => {
         "2021-11-02",
         "2021-11-03",
         "2021-11-04",
+        "2021-11-05",
       ]);
       expect(expenditureEachDay["2021-11-01"]?.records?.length).toEqual(2);
     });

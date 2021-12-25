@@ -87,10 +87,10 @@ export default class BudgetNotificationJob extends AbstractJob {
         this.timedRecords.inquire(budget.name, 60 * 24)
       ) {
         const message = `Budget "${
-          budget.amount
-        }" has exceeded threshold usage of the month (${(usage * 100).toFixed(
-          2
-        )}%). Notifying user.`;
+          budget.name
+        }" has reached notification level (${
+          this.notificationLevel * 100
+        }%) (Usage is at ${(usage * 100).toFixed(2)}%).`;
         logger.info(`Sending message from notification job: ${message}`);
         TelegramService.sendMessage(message);
       }

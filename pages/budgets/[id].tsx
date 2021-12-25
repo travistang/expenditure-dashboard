@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import { useRouter } from "next/router";
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { Budget } from "@prisma/client";
+import { Budget, ExpenditureRecord } from "@prisma/client";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { endOfMonth, format, startOfMonth } from "date-fns";
 
 import * as ExpenditureStatisticsDomain from "../../domain/expenditureStatistics";
 
-import { ExpenditureRecord } from "../../prisma/generated/type-graphql";
 import {
   GET_BUDGET_BY_ID,
   GET_RECORDS_UNDER_BUDGET,

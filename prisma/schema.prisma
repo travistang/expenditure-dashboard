@@ -29,8 +29,8 @@ model ExpenditureRecord {
   description String
   labels      String[]
   amount      Float
-  currency    Currency @default(EUR)
-  exchangeRate Float @default(1)
+  currency    Currency? @default(EUR)
+  exchangeRate Float? @default(1)
 }
 
 model UploadRequest {
