@@ -1,7 +1,7 @@
 import { ExpenditureRecord } from "@prisma/client";
 import { ResponsiveLine } from "@nivo/line";
-import { accumulatedExpenditureOfEachDay } from "../../../domain/expenditureOfDays";
-import withWidgetShell from "./WidgetShell";
+import { accumulatedExpenditureOfEachDay } from "../domain/expenditureOfDays";
+import withWidgetShell from "./Budgets/BudgetDetails/WidgetShell";
 import { format } from "date-fns";
 type Props = {
   records: ExpenditureRecord[];

@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 
 import prisma from "./prisma-client";
 import { CustomBudgetResolver } from "./backend/budgets";
-import initializeJobs from "./jobs";
+import jobs from "./jobs";
 import logger from "./logger";
 import authMiddleware from "./backend/middlewares/authMiddleware";
 import loginHandler from "./pages/api/login";
@@ -22,7 +22,6 @@ const handle = nextApp.getRequestHandler();
 nextApp
   .prepare()
   .then(() => {
-    const jobs = initializeJobs(prisma);
     jobs.forEach((job) => job.start());
   })
   .then(async () => {

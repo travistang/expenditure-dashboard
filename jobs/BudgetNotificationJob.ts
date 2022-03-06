@@ -3,6 +3,7 @@ import { endOfMonth, startOfMonth } from "date-fns";
 import TelegramService from "../backend/domain/TelegramService";
 import TimedRecordService from "../backend/domain/TimedRecordService";
 import logger from "../logger";
+import prisma from "../prisma-client";
 import { ExpenditureRecordWhereInput } from "../prisma/generated/type-graphql";
 import { yyyyMMdd, yyyyMMddHHmmss } from "../utils/dates";
 import AbstractJob, { AbstractJobInitConfig } from "./AbstractJob";
@@ -11,7 +12,7 @@ type BudgetNotificationJobConfig = AbstractJobInitConfig & {
   notificationLevel: number;
 };
 
-export default class BudgetNotificationJob extends AbstractJob {
+class BudgetNotificationJob extends AbstractJob {
   notificationLevel: number;
   timedRecords = new TimedRecordService();
 
@@ -21,21 +22,23 @@ export default class BudgetNotificationJob extends AbstractJob {
     this.notificationLevel = config.notificationLevel;
     TelegramService.register(
       "/budget_status",
-      async (args: { date?: string }) => {
-        logger.info("Running /budget_status callback");
-        const date = args.date ? new Date(args.date).getTime() : Date.now();
-        const budgets = await this.prisma.budget.findMany({});
-        TelegramService.asTyping();
-        const budgetUsageMap = await Promise.all(
-          budgets.map(async (budget) => {
-            const usage = await this.computeBudgetUsage(budget, date);
-            return `${budget.name}: ${(usage * 100).toFixed(2)}%`;
-          })
-        );
-        TelegramService.sendMessage(
-          `Your budget's status: \n ${budgetUsageMap.join("\n\n")}`
-        );
-      }
+      this.budgetStatusCallback.bind(this)
+    );
+  }
+
+  async budgetStatusCallback(args: { date?: string }) {
+    logger.info("Running /budget_status callback");
+    const date = args.date ? new Date(args.date).getTime() : Date.now();
+    const budgets = await this.prisma.budget.findMany({});
+    TelegramService.asTyping();
+    const budgetUsageMap = await Promise.all(
+      budgets.map(async (budget) => {
+        const usage = await this.computeBudgetUsage(budget, date);
+        return `${budget.name}: ${(usage * 100).toFixed(2)}%`;
+      })
+    );
+    TelegramService.sendMessage(
+      `Your budget's status: \n ${budgetUsageMap.join("\n\n")}`
     );
   }
 
@@ -97,3 +100,9 @@ export default class BudgetNotificationJob extends AbstractJob {
     });
   }
 }
+
+export default new BudgetNotificationJob({
+  interval: 60 * 1000 * 60,
+  prisma,
+  notificationLevel: 0.75,
+});

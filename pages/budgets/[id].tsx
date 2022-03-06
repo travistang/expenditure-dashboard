@@ -3,9 +3,13 @@ import classnames from "classnames";
 import { useRouter } from "next/router";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { Budget, ExpenditureRecord } from "@prisma/client";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faCaretLeft,
+  faCaretRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { endOfMonth, format, startOfMonth } from "date-fns";
+import { addMonths, endOfMonth, format, startOfMonth } from "date-fns";
 
 import * as ExpenditureStatisticsDomain from "../../domain/expenditureStatistics";
 
@@ -16,7 +20,7 @@ import {
 import BudgetSummary from "../../components/Budgets/BudgetDetails/BudgetSummary";
 import LoadingSpinnerCover from "../../components/LoadingSpinnerCover";
 import BudgetStats from "../../components/Budgets/BudgetDetails/BudgetStats";
-import AccumulatedChart from "../../components/Budgets/BudgetDetails/AccumulatedChart";
+import AccumulatedChart from "../../components/AccumulatedChart";
 import InputBase from "../../components/Form/Input";
 import { BudgetUsageColor, getBudgetUsageLevel } from "../../constants/budgets";
 import BudgetRecordsList from "../../components/Budgets/BudgetDetails/BudgetRecordsList";
@@ -87,7 +91,7 @@ export default function BudgetDetailPage() {
           onMutate={onUpdateBudget}
         />
       )}
-      <div className="sticky top-0 col-span-full grid grid-cols-12 items-end pb-2 z-10 bg-base-200">
+      <div className="sticky top-0 col-span-full grid grid-cols-12 items-center pb-2 z-10 bg-base-200">
         <button
           type="button"
           onClick={() => push("/budgets")}
@@ -100,10 +104,22 @@ export default function BudgetDetailPage() {
           name="date"
           label=""
           type="month"
-          className="col-end-13 col-span-5 md:col-start-10 mr-2"
+          className="col-start-6 col-end-11 md:col-start-8 mr-2"
           value={format(searchDate, "yyyy-MM")}
           onChange={(e) => setSearchDate(new Date(e.target.value))}
         />
+        <button
+          onClick={() => setSearchDate(addMonths(searchDate, -1))}
+          className="align-center self-center col-span-1 btn btn-square btn-ghost w-4 h-4"
+        >
+          <FontAwesomeIcon icon={faCaretLeft} />
+        </button>
+        <button
+          onClick={() => setSearchDate(addMonths(searchDate, 1))}
+          className="align-center self-center col-span-1 btn btn-square btn-ghost w-4 h-4"
+        >
+          <FontAwesomeIcon icon={faCaretRight} />
+        </button>
       </div>
       <BudgetSummary
         onEdit={() => setUpdatingBudget(true)}

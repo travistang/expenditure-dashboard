@@ -11,7 +11,7 @@ export default class TimedRecordService {
       return true;
     }
     const now = new Date();
-    if (isAfter(addMinutes(now, maxAgeMinutes), this.records[key])) {
+    if (isAfter(this.records[key], addMinutes(now, maxAgeMinutes))) {
       logger.info(`Updating timed record ${key}`);
       this.records[key] = now;
       return true;

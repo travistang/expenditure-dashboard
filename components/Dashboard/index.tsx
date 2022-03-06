@@ -1,5 +1,5 @@
 import React from "react";
-import { format } from "date-fns";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 
 import useMonthlyExpenditure from "./useMonthlyExpenditure";
 import CommonExpenditureWidget from "./CommonExpenditureWidget";
@@ -20,6 +20,7 @@ import {
 import Stats from "./Stats";
 import { BudgetUsageColor, getBudgetUsageLevel } from "../../constants/budgets";
 import BudgetOverviewWidget from "./BudgetOverviewWidget";
+import AccumulatedChart from "../AccumulatedChart";
 
 type BudgetListQueryResponseType = {
   budgets: BudgetWithUsage[];
@@ -75,6 +76,15 @@ export default function Dashboard() {
           records={records}
           aggregationFunc={ExpenditureStatistics.count}
           subtitle={currentMonthString}
+        />
+      </div>
+      <div className="stats col-span-full h-96">
+        <AccumulatedChart
+          loading={false}
+          records={records}
+          budgetAmount={budgetLimit}
+          fromDate={startOfMonth(selectedDate)}
+          toDate={endOfMonth(selectedDate)}
         />
       </div>
       <BudgetOverviewWidget budgets={budgetsData?.budgets ?? []} />

@@ -1,7 +1,7 @@
 FROM node:14-alpine as build
 
 WORKDIR /app
-ADD . /app/
+COPY constants/ prisma/ queries/ utils/ backend/ styles/ components/ public/ jobs/ pages/ domain/ *.js *.ts *.json /app/
 
 RUN yarn
 RUN npx prisma generate
